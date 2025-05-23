@@ -1,5 +1,7 @@
 export const pingHandler = (message) => {
   const { body } = message;
+  if (body !== "/ping") return false;
 
-  if (body === "/ping") message.reply("pong");
+  message.reply("pong");
+  return true;
 };

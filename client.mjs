@@ -6,5 +6,6 @@ export const client = new Client({
   qrMaxRetries: 5,
   puppeteer: {
     executablePath: "/usr/bin/google-chrome-stable",
+    headless: true,
   },
 });
