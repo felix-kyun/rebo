@@ -1,24 +1,25 @@
 import wa from "whatsapp-web.js";
 import { downloadVideo } from "../utils/downloadVideo.mjs";
 import { client } from "../client.mjs";
-import { stat } from "fs";
 import { getFileSizeInMb } from "../utils/getFileSizeInMb.mjs";
 
 const { MessageMedia } = wa;
 
 export const videoDownloadHanlder = async (message) => {
-  const { body, from } = message;
+  const { body } = message;
   if (!body.startsWith("/downloadVideo")) return false;
 
   await client.sendPresenceAvailable();
 
-  let url;
+  let url, replyMsg;
 
   if (message.hasQuotedMsg) {
     const quotedMsg = await message.getQuotedMessage();
     url = quotedMsg.body;
+    replyMsg = quotedMsg;
   } else {
     url = body.split(" ")[1];
+    replyMsg = message;
   }
 
   if (!url) {
@@ -26,15 +27,16 @@ export const videoDownloadHanlder = async (message) => {
     return true;
   }
 
-  message.reply("Downloading video...");
+  await message.reply("```\nDownloading video...\n```");
   let videoPath = await downloadVideo(url);
   const fileSize = await getFileSizeInMb(videoPath);
 
-  if (fileSize > 50)
+  if (fileSize > 50) {
     throw new Error("File size exceeds 50MB limit imposed by whatsapp-web.js");
+  }
 
   const media = MessageMedia.fromFilePath(videoPath);
-  message.reply(media);
+  replyMsg.reply(media);
 
   await client.sendPresenceUnavailable();
   return true;

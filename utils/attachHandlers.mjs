@@ -15,6 +15,7 @@ export const registerHandlers = (client, handlers) => {
           message.reply(
             "*Oops! Something went wrong*\n```" + error.message + "```",
           );
+          client.sendPresenceUnavailable();
         }
       });
 
