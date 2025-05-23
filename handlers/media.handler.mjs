@@ -27,7 +27,7 @@ export const videoDownloadHanlder = async (message) => {
     return true;
   }
 
-  await message.reply("```\nDownloading video...\n```");
+  // await message.reply("```\nDownloading video...\n```");
   let videoPath = await downloadVideo(url);
   const fileSize = await getFileSizeInMb(videoPath);
 

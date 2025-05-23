@@ -16,7 +16,7 @@ export const downloadVideo = async (url) => {
   try {
     // download the video using yt-dlp
     await execPromise(
-      `/usr/bin/yt-dlp -S filesize --merge-output-format mp4 -f 'bv[height=720]+ba/b[height=720]' -o './.downloadCache/${fileName}.%(ext)s' ${url}`,
+      `/usr/bin/yt-dlp -S filesize --merge-output-format mp4 -f 'bv[height=720]+ba/b[height=720]/bv[height=480]+ba/b[height=480]/bv[height=1080]+ba/b[height=1080]' -o './.downloadCache/${fileName}.%(ext)s' ${url}`,
     );
 
     // fix the codec as required by whatsapp
