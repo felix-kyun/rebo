@@ -24,16 +24,10 @@ export const downloadVideo = async (url) => {
       `./.downloadCache/${fileName}.%(ext)s`,
     ]);
 
-    // fix the codec as required by waha.js
+    // fix the codec as required by whatsapp
     const { stdout, stderr } = await execPromise(
-      // as mentioned in the documentation
       `ffmpeg -i ./.downloadCache/${fileName}.mp4 -c:v libx264 -map 0 -movflags +faststart ./.downloadCache/output/${fileName}.mp4`,
     );
-
-    if (stderr) {
-      console.error("Error fixing codec:", stderr);
-      return null;
-    }
   } catch (err) {
     console.error("Error downloading video:", err);
     return null;
