@@ -4,7 +4,6 @@ import { exec } from "child_process";
 import { promisify } from "util";
 
 const execPromise = promisify(exec);
-const ytdlp = new YTDlpWrap.default("/usr/bin/yt-dlp");
 
 export const downloadVideo = async (url) => {
   const fileName = url.split("/").pop();
@@ -17,20 +16,16 @@ export const downloadVideo = async (url) => {
 
   try {
     // download the video using yt-dlp
-    await ytdlp.execPromise([
-      url,
-      "-S res,ext:mp4",
-      "-o",
-      `./.downloadCache/${fileName}.%(ext)s`,
-    ]);
+    await execPromise(
+      `/usr/bin/yt-dlp -S filesize --merge-output-format mp4 -f 'bv[height=720]+ba/b[height=720]' -o './.downloadCache/${fileName}.%(ext)s' ${url}`,
+    );
 
     // fix the codec as required by whatsapp
-    const { stdout, stderr } = await execPromise(
+    await execPromise(
       `ffmpeg -i ./.downloadCache/${fileName}.mp4 -c:v libx264 -map 0 -movflags +faststart ./.downloadCache/output/${fileName}.mp4`,
     );
   } catch (err) {
-    console.error("Error downloading video:", err);
-    return null;
+    throw new Error("Failed to download video" + err.message);
   }
 
   return output;

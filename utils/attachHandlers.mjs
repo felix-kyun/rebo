@@ -11,10 +11,9 @@ export const registerHandlers = (client, handlers) => {
         try {
           await handler(message);
         } catch (error) {
-          console.error(`Error in handler for event ${event}:`, error);
+          console.error(`Error in ${handler.name}: `, error.message);
           message.reply(
-            "An error occurred while processing your request. Please try again.\n",
-            error.message,
+            "*Oops! Something went wrong*\n```" + error.message + "```",
           );
         }
       });
