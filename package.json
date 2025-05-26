@@ -14,7 +14,9 @@
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
   "dependencies": {
+    "dotenv": "^16.5.0",
     "invoke-dlp": "^0.1.2",
+    "mongoose": "^8.15.0",
     "puppeteer": "^24.9.0",
     "qrcode-terminal": "^0.12.0",
     "uuid": "^11.1.0",
