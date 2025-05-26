@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      invoke-dlp:
+        specifier: ^0.1.2
+        version: 0.1.2
       puppeteer:
         specifier: ^24.9.0
         version: 24.9.0
@@ -407,6 +410,9 @@ packages:
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
+
+  invoke-dlp@0.1.2:
+    resolution: {integrity: sha512-dpYVRJ4Opo4KPEj0SP7b85PWCblV/vTkvCS7RFBUxdACFotwsflPVHktPWqfPzISny1saH0ca0bPmUaIThaWjg==}
 
   ip-address@9.0.5:
     resolution: {integrity: sha512-zHtQzGojZXTwZTHQqra+ETKd4Sn3vgi7uBmlPoXVWZqYvuKmtI0l/VZTjqGmJY9x88GGOaZ9+G9ES8hC4T4X8g==}
@@ -1275,6 +1281,8 @@ snapshots:
       wrappy: 1.0.2
 
   inherits@2.0.4: {}
+
+  invoke-dlp@0.1.2: {}
 
   ip-address@9.0.5:
     dependencies:

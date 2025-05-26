@@ -1,7 +1,7 @@
 /*
  * Registers event handler for a client
  * @param {Client} client - The client to register the handler for
- * @param {Array<async function (message: Message): Boolean>} handlers - List of handlers to register
+ * @param {Array<function (message: Message): Promise<Boolean>>} handlers - List of handlers to register
  * @returns {void}
  */
 export const registerHandlers = (client, handlers) => {
