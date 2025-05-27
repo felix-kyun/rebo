@@ -20,5 +20,5 @@ export async function chatHandler(message) {
   }
 
   // tmp
-  message.reply(`Chat preferences: ${chatPref}`);
+  message.reply(`Chat preferences: ${chatPref.preferences.toString()}`);
 }

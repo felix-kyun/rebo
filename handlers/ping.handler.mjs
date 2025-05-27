@@ -1,7 +1,8 @@
 export const pingHandler = (message) => {
-  const { body } = message;
-  if (body !== "/ping") return false;
+  const { args } = message;
 
-  message.reply("pong");
+  message.reply(`Pong ${args.join(" ") || ""}!`);
+  message.react("✅");
+
   return true;
 };
