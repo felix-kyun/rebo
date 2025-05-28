@@ -17,9 +17,9 @@ export const registerHandlers = (client, handlers) => {
       message = transform(message);
 
       if (handlerMap[message.command]) {
-        await message.wait();
         try {
           client.sendPresenceAvailable();
+          await message.wait();
 
           // send seen if command exists
           const chat = await message.getChat();
@@ -35,10 +35,16 @@ export const registerHandlers = (client, handlers) => {
             `Error in ${handlerMap[message.command].name}: `,
             error.message,
           );
-          message.fail();
-          message.reply(
-            "*Oops! Something went wrong*\n```" + error.message + "```",
-          );
+
+          // wrap in try-catch to handle even reply errors
+          try {
+            message.fail();
+            message.reply(
+              "*Oops! Something went wrong*\n```" + error.message + "```",
+            );
+          } catch (replyError) {
+            console.error("Failed to send error reply:", replyError.message);
+          }
         } finally {
           client.sendPresenceUnavailable();
         }

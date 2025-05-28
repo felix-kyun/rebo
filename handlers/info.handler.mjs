@@ -1,11 +1,14 @@
+import { pkg } from "../utils/config.mjs";
+
 export async function info(message) {
   const { wid } = message.client.info;
 
-  message.reply(
+  await message.reply(
     `nodejs version: ${process.version}
 uptime: ${Math.floor(process.uptime() / 60)} minutes
 platform: ${process.platform}
-wid: ${wid._serialized}`,
+wid: ${wid._serialized}
+ReBo version: ${pkg.version}`,
   );
   message.react("ℹ️");
 
