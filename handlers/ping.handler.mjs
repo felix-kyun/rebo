@@ -1,4 +1,4 @@
-export const pingHandler = (message) => {
+export const pingHandler = async (message) => {
   const { args } = message;
 
   message.reply(`Pong ${args.join(" ") || ""}!`);

@@ -17,20 +17,33 @@ export const registerHandlers = (client, handlers) => {
       message = transform(message);
 
       if (handlerMap[message.command]) {
+        await message.wait();
         try {
           client.sendPresenceAvailable();
-          await handlerMap[message.command](message);
+
+          // send seen if command exists
+          const chat = await message.getChat();
+          await chat.sendSeen();
+
+          // call the handler
+          const ret = await handlerMap[message.command](message);
+
+          if (ret) await message.success();
+          else await message.fail();
         } catch (error) {
           console.error(
             `Error in ${handlerMap[message.command].name}: `,
             error.message,
           );
+          message.failt();
           message.reply(
             "*Oops! Something went wrong*\n```" + error.message + "```",
           );
         } finally {
           client.sendPresenceUnavailable();
         }
+      } else {
+        await message.fail();
       }
     });
   }

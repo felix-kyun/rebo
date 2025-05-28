@@ -5,12 +5,8 @@ import { getFileSizeInMb } from "../utils/getFileSizeInMb.mjs";
 
 const { MessageMedia } = wa;
 
-export const videoDownloadHanlder = async (message) => {
+export const download = async (message) => {
   const { body } = message;
-  if (!body.startsWith("/downloadVideo")) return false;
-
-  await client.sendPresenceAvailable();
-
   let url, replyMsg;
 
   if (message.hasQuotedMsg) {
@@ -24,7 +20,7 @@ export const videoDownloadHanlder = async (message) => {
 
   if (!url) {
     message.reply("Please provide a video URL.");
-    return true;
+    return false;
   }
 
   // await message.reply("```\nDownloading video...\n```");
@@ -38,6 +34,5 @@ export const videoDownloadHanlder = async (message) => {
   const media = MessageMedia.fromFilePath(videoPath);
   replyMsg.reply(media);
 
-  await client.sendPresenceUnavailable();
   return true;
 };
