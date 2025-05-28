@@ -3,6 +3,7 @@ import { downloadVideo } from "../utils/downloadVideo.mjs";
 import { client } from "../client.mjs";
 import { getFileSizeInMb } from "../utils/getFileSizeInMb.mjs";
 import { Url } from "../models/urlStore.models.mjs";
+import { downloadCache } from "../utils/cache.mjs";
 
 const { MessageMedia } = wa;
 
@@ -25,10 +26,10 @@ export const download = async (message) => {
   }
 
   // check cache
-  const cachedUrl = await Url.findOne({ url });
-  if (cachedUrl) {
+  const cachedFile = await downloadCache.get(url);
+  if (cachedFile) {
     console.log("Using cached video for URL:", url);
-    const media = MessageMedia.fromFilePath(cachedUrl.filename);
+    const media = MessageMedia.fromFilePath(cachedFile);
     replyMsg.reply(media);
     return true;
   }
@@ -43,10 +44,7 @@ export const download = async (message) => {
   }
 
   // save to cache
-  await Url.create({
-    url,
-    filename: videoPath,
-  });
+  downloadCache.add(url, videoPath);
 
   const media = MessageMedia.fromFilePath(videoPath);
   await replyMsg.reply(media);
