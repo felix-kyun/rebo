@@ -35,7 +35,7 @@ export const registerHandlers = (client, handlers) => {
             `Error in ${handlerMap[message.command].name}: `,
             error.message,
           );
-          message.failt();
+          message.fail();
           message.reply(
             "*Oops! Something went wrong*\n```" + error.message + "```",
           );

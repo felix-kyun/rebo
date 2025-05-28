@@ -2,6 +2,7 @@ import wa from "whatsapp-web.js";
 import { downloadVideo } from "../utils/downloadVideo.mjs";
 import { client } from "../client.mjs";
 import { getFileSizeInMb } from "../utils/getFileSizeInMb.mjs";
+import { Url } from "../models/urlStore.models.mjs";
 
 const { MessageMedia } = wa;
 
@@ -23,7 +24,17 @@ export const download = async (message) => {
     return false;
   }
 
-  // await message.reply("```\nDownloading video...\n```");
+  // check cache
+  const cachedUrl = await Url.findOne({ url });
+  if (cachedUrl) {
+    console.log("Using cached video for URL:", url);
+    const media = MessageMedia.fromFilePath(cachedUrl.filename);
+    replyMsg.reply(media);
+    return true;
+  }
+
+  console.log("Downloading video from URL:", url);
+
   let videoPath = await downloadVideo(url);
   const fileSize = await getFileSizeInMb(videoPath);
 
@@ -31,8 +42,14 @@ export const download = async (message) => {
     throw new Error("File size exceeds 50MB limit imposed by whatsapp-web.js");
   }
 
+  // save to cache
+  await Url.create({
+    url,
+    filename: videoPath,
+  });
+
   const media = MessageMedia.fromFilePath(videoPath);
-  replyMsg.reply(media);
+  await replyMsg.reply(media);
 
   return true;
 };
