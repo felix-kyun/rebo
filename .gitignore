@@ -3,3 +3,6 @@ node_modules/
 .wwebjs_cache/
 .downloadCache/
 .env
+app.log
+*.env
+!.sample.env

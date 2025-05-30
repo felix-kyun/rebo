@@ -1,4 +1,4 @@
-import { PREFIX } from "./config.mjs";
+import { PREFIX } from "./config/config.mjs";
 import { transform } from "./splitCommand.mjs";
 
 /*
@@ -9,48 +9,49 @@ import { transform } from "./splitCommand.mjs";
  */
 
 export const registerHandlers = (client, handlers) => {
-  for (const [event, handlerMap] of Object.entries(handlers)) {
-    client.on(event, async (message) => {
-      // check if the message is a command
-      if (!message.body.startsWith(PREFIX)) return;
+	for (const [event, handlerMap] of Object.entries(handlers)) {
+		client.on(event, async (message) => {
+			// check if the message is a command
+			if (!message.body.startsWith(PREFIX)) return;
 
-      message = transform(message);
+			message = transform(message);
 
-      if (handlerMap[message.command]) {
-        try {
-          client.sendPresenceAvailable();
-          await message.wait();
+			if (handlerMap[message.command]) {
+				try {
+					client.sendPresenceAvailable();
+					await message.wait();
 
-          // send seen if command exists
-          const chat = await message.getChat();
-          await chat.sendSeen();
+					// send seen if command exists
+					const chat = await message.getChat();
+					await chat.sendSeen();
 
-          // call the handler
-          const ret = await handlerMap[message.command](message);
+					// call the handler
+					const ret = await handlerMap[message.command](message);
 
-          if (ret) await message.success();
-          else await message.fail();
-        } catch (error) {
-          console.error(
-            `Error in ${handlerMap[message.command].name}: `,
-            error.message,
-          );
+					if (ret) await message.success();
+					else await message.fail();
+				} catch (error) {
+					console.error(
+						`Error in ${handlerMap[message.command].name}: `,
+						error.message
+					);
 
-          // wrap in try-catch to handle even reply errors
-          try {
-            message.fail();
-            message.reply(
-              "*Oops! Something went wrong*\n```" + error.message + "```",
-            );
-          } catch (replyError) {
-            console.error("Failed to send error reply:", replyError.message);
-          }
-        } finally {
-          client.sendPresenceUnavailable();
-        }
-      } else {
-        await message.fail();
-      }
-    });
-  }
+					// wrap in try-catch to handle even reply errors
+					try {
+						message.fail();
+						message.reply("*Error: *```" + error.message + "```");
+					} catch (replyError) {
+						console.error(
+							"Failed to send error reply:",
+							replyError.message
+						);
+					}
+				} finally {
+					client.sendPresenceUnavailable();
+				}
+			} else {
+				await message.fail();
+			}
+		});
+	}
 };

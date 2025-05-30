@@ -1,5 +1,3 @@
-import { client } from "../client.mjs";
-
 export const transform = (message) => {
   // Split the message into command and arguments
   const parts = message.body.split(" ");

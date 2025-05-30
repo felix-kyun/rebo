@@ -5,15 +5,19 @@ import { pingHandler as ping } from "./ping.handler.mjs";
 import { download } from "./media.handler.mjs";
 import { help } from "./help.handler.mjs";
 import { echo } from "./echo.handler.mjs";
+import { setHandler } from "./set.handler.mjs";
+import { getHandler } from "./get.handler.mjs";
 
 const handlers = {
-  message_create: {
-    ping,
-    info,
-    download,
-    help,
-    echo,
-  },
+	message_create: {
+		ping,
+		info,
+		download,
+		help,
+		echo,
+		set: setHandler,
+		get: getHandler,
+	},
 };
 
 registerHandlers(client, handlers);
