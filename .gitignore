@@ -1,8 +1,6 @@
 node_modules/
-.wwebjs_auth/
-.wwebjs_cache/
 .downloadCache/
-.env
-app.log
+.wwebjs*
+*.log
 *.env
 !.sample.env
