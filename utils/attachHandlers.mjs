@@ -33,19 +33,18 @@ export const registerHandlers = (client, handlers) => {
 					else await message.fail();
 				} catch (error) {
 					logger.error(
-						`Error in ${handlerMap[message.command].name}: `,
-						error.message
+						error,
+						`Error in ${handlerMap[message.command].name} handler`
 					);
 
 					// wrap in try-catch to handle even reply errors
 					try {
-						message.fail();
-						message.reply("*Error: *```" + error.message + "```");
-					} catch (replyError) {
-						logger.error(
-							"Failed to send error reply:",
-							replyError.message
+						await message.fail();
+						await message.reply(
+							"*Error: * ```" + error.message + "```"
 						);
+					} catch (replyError) {
+						logger.error("Failed to send error reply:", replyError);
 					}
 				} finally {
 					client.sendPresenceUnavailable();

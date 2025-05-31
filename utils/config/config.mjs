@@ -21,3 +21,4 @@ export const PREFIX = process.env.PREFIX || "/";
 export const pkg = packageJson;
 export const LOGFILE = process.env.LOGFILE || "app.log";
 export const LOG_LEVEL = process.env.LOG_LEVEL || "info";
+export const OPENAI_KEY = process.env.OPENAI_KEY;

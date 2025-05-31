@@ -7,6 +7,7 @@ import { help } from "./help.handler.mjs";
 import { echo } from "./echo.handler.mjs";
 import { setHandler } from "./set.handler.mjs";
 import { getHandler } from "./get.handler.mjs";
+import { ai } from "./ai.handler.mjs";
 
 const handlers = {
 	message_create: {
@@ -17,6 +18,7 @@ const handlers = {
 		echo,
 		set: setHandler,
 		get: getHandler,
+		ai,
 	},
 };
 

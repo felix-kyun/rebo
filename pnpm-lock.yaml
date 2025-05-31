@@ -17,6 +17,9 @@ importers:
       mongoose:
         specifier: ^8.15.0
         version: 8.15.0(socks@2.8.4)
+      openai:
+        specifier: ^5.0.1
+        version: 5.0.1(ws@8.18.2)(zod@3.25.23)
       pino:
         specifier: ^9.7.0
         version: 9.7.0
@@ -668,6 +671,18 @@ packages:
 
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
+
+  openai@5.0.1:
+    resolution: {integrity: sha512-Do6vxhbDv7cXhji/4ct1lrpZYMAOmjYbhyA9LJTuG7OfpbWMpuS+EIXkRT7R+XxpRB1OZhU/op4FU3p3uxU6gw==}
+    hasBin: true
+    peerDependencies:
+      ws: ^8.18.0
+      zod: ^3.23.8
+    peerDependenciesMeta:
+      ws:
+        optional: true
+      zod:
+        optional: true
 
   pac-proxy-agent@7.2.0:
     resolution: {integrity: sha512-TEB8ESquiLMc0lV8vcd5Ql/JAKAoyzHFXaStwjkzpOpC5Yv+pIzLfHvjTSdf3vpa2bMiUQrg9i6276yn8666aA==}
@@ -1662,6 +1677,11 @@ snapshots:
   once@1.4.0:
     dependencies:
       wrappy: 1.0.2
+
+  openai@5.0.1(ws@8.18.2)(zod@3.25.23):
+    optionalDependencies:
+      ws: 8.18.2
+      zod: 3.25.23
 
   pac-proxy-agent@7.2.0:
     dependencies:
