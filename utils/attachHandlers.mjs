@@ -1,4 +1,5 @@
 import { PREFIX } from "./config/config.mjs";
+import { logger } from "./log/log.mjs";
 import { transform } from "./splitCommand.mjs";
 
 /*
@@ -31,7 +32,7 @@ export const registerHandlers = (client, handlers) => {
 					if (ret) await message.success();
 					else await message.fail();
 				} catch (error) {
-					console.error(
+					logger.error(
 						`Error in ${handlerMap[message.command].name}: `,
 						error.message
 					);
@@ -41,7 +42,7 @@ export const registerHandlers = (client, handlers) => {
 						message.fail();
 						message.reply("*Error: *```" + error.message + "```");
 					} catch (replyError) {
-						console.error(
+						logger.error(
 							"Failed to send error reply:",
 							replyError.message
 						);

@@ -13,5 +13,4 @@ client.on("qr", genQr);
 logger.info("Connecting to MongoDB...");
 await mongoConnect();
 
-logger.info("Connected to MongoDB!");
 client.initialize();
