@@ -7,20 +7,18 @@ const openai = new OpenAI({
 	baseURL: "https://openrouter.ai/api/v1",
 });
 
-export async function chatCompletion(
-	prompt,
-	model = "deepseek/deepseek-r1-0528:free"
-) {
+export async function chatCompletion(prompt, opts = {}) {
 	try {
 		const response = await openai.chat.completions.create({
-			model,
+			model: "mistralai/mistral-7b-instruct:free",
 			messages: [
 				{ role: "system", content: "You are a helpful assistant." },
 				{ role: "user", content: prompt },
 			],
+			...opts,
 		});
 
-		return response.choices[0].message.content.trim();
+		return response;
 	} catch (error) {
 		throw new Error(`OpenAI API error: ${error.message}`);
 	}

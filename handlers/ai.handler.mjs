@@ -1,4 +1,3 @@
-import { logger } from "../utils/log/log.mjs";
 import { chatCompletion } from "../utils/openai/openai.mjs";
 
 export async function ai(message) {
@@ -8,7 +7,8 @@ export async function ai(message) {
 		return false;
 	}
 
-	const response = await chatCompletion(prompt);
+	const rawResponse = await chatCompletion(prompt);
+	const response = rawResponse.choices[0].message.content.trim();
 	await message.reply(response);
 
 	return true;
