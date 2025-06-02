@@ -1,8 +1,6 @@
 import { config } from "dotenv";
 import packageJson from "../../package.json" with { type: "json" };
 import { dirname, resolve } from "path";
-import { logger } from "../log/log.mjs";
-
 export const ENV = process.env.NODE_ENV || "development";
 export const __dirname = resolve(dirname(process.argv[1]));
 
@@ -10,11 +8,11 @@ export const __dirname = resolve(dirname(process.argv[1]));
 const configFile = {
     development: ".dev.env",
     production: ".env",
-    test: ".test.env"
-}
+    test: ".test.env",
+};
 
 config({
-    path: configFile[ENV], 
+    path: configFile[ENV],
 });
 
 export const MONGO_URI = process.env.MONGO_URI;

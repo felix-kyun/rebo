@@ -1,6 +1,5 @@
 import OpenAI from "openai";
 import { OPENAI_KEY } from "../config/config.mjs";
-import { logger } from "../log/log.mjs";
 
 const openai = new OpenAI({
 	apiKey: OPENAI_KEY,
