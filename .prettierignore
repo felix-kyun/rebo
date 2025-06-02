@@ -1,0 +1,5 @@
+node_modules/
+.downloadCache/
+*.env
+*.log
+.wwebjs*

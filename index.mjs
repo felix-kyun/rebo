@@ -7,8 +7,8 @@ import { genQr } from "./utils/genQr.mjs";
 
 // generate qr code in terminal
 client.on("qr", async () => {
-	logger.info("QR code generated. Scan it with your WhatsApp app.");
-	genQr(client);
+    logger.info("QR code generated. Scan it with your WhatsApp app.");
+    genQr(client);
 });
 
 // connect to MongoDB

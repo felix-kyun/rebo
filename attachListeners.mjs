@@ -14,10 +14,10 @@ client.on("authenticated", () => logger.info("Client is authenticated!"));
 
 // set offline by default
 client.on("ready", async () => {
-	await client.sendPresenceUnavailable();
+    await client.sendPresenceUnavailable();
 
-	registerMiddlewares(client, middlewares);
-	registerCommands(client, commands);
+    registerMiddlewares(client, middlewares);
+    registerCommands(client, commands);
 
-	registerHandlers(client);
+    registerHandlers(client);
 });

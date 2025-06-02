@@ -8,14 +8,14 @@ import { getHandler } from "./get.command.mjs";
 import { ai } from "./ai.command.mjs";
 
 export const commands = {
-	message_create: {
-		ping,
-		info,
-		download,
-		help,
-		echo,
-		set: setHandler,
-		get: getHandler,
-		ai,
-	},
+    message_create: {
+        ping,
+        info,
+        download,
+        help,
+        echo,
+        set: setHandler,
+        get: getHandler,
+        ai,
+    },
 };
