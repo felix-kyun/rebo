@@ -1,5 +1,7 @@
+import { PREFIX } from "../utils/config/config.mjs";
+
 export const splitCommand = (message) => {
-    if (!message.body.startsWith("/")) return;
+    if (!message.body.startsWith(PREFIX)) return;
 
     // Split the message into command and arguments
     const parts = message.body.split(" ");
