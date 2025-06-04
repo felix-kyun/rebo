@@ -21,3 +21,12 @@ export const pkg = packageJson;
 export const LOGFILE = process.env.LOGFILE || "app.log";
 export const LOG_LEVEL = process.env.LOG_LEVEL || "info";
 export const OPENAI_KEY = process.env.OPENAI_KEY;
+
+// remember this file should be loaded before any other file
+console.clear();
+
+// show env specific env vars in debug mode
+if (ENV === "development" && LOG_LEVEL === "debug") {
+    process.stdout.write("Env ");
+    console.dir({ PREFIX, LOG_LEVEL, LOGFILE, ENV }, { compact: false });
+}
