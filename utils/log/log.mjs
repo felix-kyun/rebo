@@ -8,11 +8,10 @@ export const logger = pino({
         targets: [
             // 'pino-pretty'
             {
-                target: "pino-pretty",
+                target: "./pino-pretty-transport.mjs",
                 level: LOG_LEVEL,
                 options: {
                     colorize: true,
-                    translateTime: "SYS:standard",
                     ignore: "pid,hostname",
                 },
             },
