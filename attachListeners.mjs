@@ -16,8 +16,13 @@ client.on("authenticated", () => logger.info("Client is authenticated!"));
 client.on("ready", async () => {
     await client.sendPresenceUnavailable();
 
+    // register middlewares
     registerMiddlewares(client, middlewares);
+    logger.debug("Middlewares registered");
+
+    // register commands
     registerCommands(client, commands);
+    logger.debug("Commands registered");
 
     registerHandlers(client);
 });

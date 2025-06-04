@@ -10,6 +10,10 @@ import { logger } from "./log/log.mjs";
 export const registerHandlers = (client) => {
     const { commands, middlewares } = client;
 
+    logger.debug(
+        `Avaliable Middlwares: ${middlewares.map((f) => f.name).join(", ")}`,
+    );
+
     for (const [event, availiableCommands] of Object.entries(commands)) {
         client.on(event, async (message) => {
             // run middleware first
@@ -45,7 +49,7 @@ export const registerHandlers = (client) => {
                 } catch (error) {
                     logger.error(
                         error,
-                        `Error in ${commands[command].name} handler`,
+                        `Error in ${availiableCommands[command].name} handler`,
                     );
 
                     // wrap in try-catch to handle even reply errors
@@ -65,5 +69,9 @@ export const registerHandlers = (client) => {
                 return;
             }
         });
+
+        logger.debug(
+            `Registered ${Object.keys(availiableCommands).join(", ")} for ${event}`,
+        );
     }
 };
