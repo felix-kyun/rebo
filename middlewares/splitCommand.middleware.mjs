@@ -5,7 +5,7 @@ export const splitCommand = (message) => {
 
     // Split the message into command and arguments
     const parts = message.body.split(" ");
-    const command = parts[0].substring(1);
+    const command = parts[0].replace(PREFIX, "");
     const args = parts.slice(1);
 
     message.command = command;
