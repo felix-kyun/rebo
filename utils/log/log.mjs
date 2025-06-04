@@ -9,6 +9,7 @@ export const logger = pino({
             // 'pino-pretty'
             {
                 target: "pino-pretty",
+                level: LOG_LEVEL,
                 options: {
                     colorize: true,
                     translateTime: "SYS:standard",
@@ -19,6 +20,7 @@ export const logger = pino({
             // app.log
             {
                 target: "pino/file",
+                level: LOG_LEVEL,
                 options: {
                     destination: resolve("app.log"),
                     mkdir: true,
