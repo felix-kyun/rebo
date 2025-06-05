@@ -1,27 +1,24 @@
-import { Chat } from "../models/chat.model.mjs";
-import { PREFIX } from "../utils/config/config.mjs";
+import { User } from "../models/user.model.mjs";
 import { logger } from "../utils/log/log.mjs";
 
 export const userMiddleware = async (message) => {
-    if (!message.body.startsWith(PREFIX)) return;
+    const {
+        id: { _serialized: id },
+        name,
+        isGroup,
+    } = await message.getChat();
 
-    const { from } = message;
-    const user = await Chat.findOne({ chatId: from });
+    const user = await User.findOne({ id });
 
-    logger.debug(
-        user ? user._doc : "No user found, creating new user",
-        "new message from",
-    );
+    logger.debug(`message ${JSON.stringify(user)}`);
 
     if (!user) {
-        const chat = await message.getChat();
-        const newChat = await Chat.create({
-            chatId: chat.id._serialized,
-            chatName: chat.name,
-            chatType: chat.iGroup ? "group" : "individual",
+        const newUser = await User.create({
+            id,
+            name,
+            type: isGroup ? "group" : "individual",
         });
-
-        message.user = newChat;
+        message.user = newUser;
     } else {
         message.user = user;
     }

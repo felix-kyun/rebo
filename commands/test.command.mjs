@@ -1,7 +1,9 @@
 import { hello } from "./testCommands/hello.test.command.mjs";
+import { caption } from "./testCommands/imageCaption.test.command.mjs";
 
 const testCommands = {
     hello,
+    caption,
 };
 export async function test(message) {
     const { args } = message;

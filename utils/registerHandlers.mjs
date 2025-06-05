@@ -1,4 +1,4 @@
-import { PREFIX } from "./config/config.mjs";
+import { BOT_MESSAGES, PREFIX } from "./config/config.mjs";
 import { logger } from "./log/log.mjs";
 
 /*
@@ -16,6 +16,9 @@ export const registerHandlers = (client) => {
 
     for (const [event, availiableCommands] of Object.entries(commands)) {
         client.on(event, async (message) => {
+            // skip bot's own messages
+            if (BOT_MESSAGES.has(message.id._serialized)) return;
+
             // run middleware first
             for (const middleware of middlewares) {
                 const ret = await middleware(message);

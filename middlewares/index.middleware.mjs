@@ -1,3 +1,4 @@
+import { autoDownload } from "./autoDownload.middleware.mjs";
 import { quickReaction } from "./quickReaction.middleware.mjs";
 import { splitCommand } from "./splitCommand.middleware.mjs";
 import { userMiddleware } from "./user.middleware.mjs";
@@ -11,4 +12,7 @@ export const middlewares = [
 
     // splits the command and arguments
     splitCommand,
+
+    // auto download media
+    autoDownload,
 ];

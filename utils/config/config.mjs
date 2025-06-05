@@ -22,6 +22,9 @@ export const LOGFILE = process.env.LOGFILE || "app.log";
 export const LOG_LEVEL = process.env.LOG_LEVEL || "info";
 export const OPENAI_KEY = process.env.OPENAI_KEY;
 
+// to keep track of bot's own messages
+export const BOT_MESSAGES = new Set();
+
 // remember this file should be loaded before any other file
 console.clear();
 
