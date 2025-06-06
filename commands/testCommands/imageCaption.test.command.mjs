@@ -10,7 +10,7 @@ export async function caption(message) {
         const media = await MessageMedia.fromUrl(args[0], {
             unsafeMime: true,
         });
-        await sendMessage(message.user.chatId, media, {
+        await sendMessage(message.user.id, media, {
             caption: "This is a caption for the image.",
             media: {
                 mimetype: "image/png",

@@ -24,6 +24,9 @@ export const OPENAI_KEY = process.env.OPENAI_KEY;
 
 // to keep track of bot's own messages
 export const BOT_MESSAGES = new Set();
+export const BOT_STATE = {
+    isCurrentReplying: false,
+};
 
 // remember this file should be loaded before any other file
 console.clear();

@@ -1,9 +1,13 @@
 import { autoDownload } from "./autoDownload.middleware.mjs";
+import { ignoreOwnMessage } from "./ignoreOwnMessage.middleware.mjs";
 import { quickReaction } from "./quickReaction.middleware.mjs";
 import { splitCommand } from "./splitCommand.middleware.mjs";
 import { userMiddleware } from "./user.middleware.mjs";
 
 export const middlewares = [
+    // skips bot's own messages
+    ignoreOwnMessage,
+
     // parses the userid and creates a new user if it doesn't exist
     userMiddleware,
 
