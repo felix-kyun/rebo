@@ -10,8 +10,6 @@ export const userMiddleware = async (message) => {
 
     const user = await User.findOne({ id });
 
-    logger.debug(`message ${JSON.stringify(user)}`);
-
     if (!user) {
         const newUser = await User.create({
             id,

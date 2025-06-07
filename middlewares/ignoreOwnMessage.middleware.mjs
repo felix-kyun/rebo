@@ -7,7 +7,6 @@ export async function ignoreOwnMessage(message) {
     if (BOT_STATE.isCurrentReplying) {
         await waitFor(() => !BOT_STATE.isCurrentReplying);
     }
-    console.log(BOT_MESSAGES);
     if (BOT_MESSAGES.has(message.id._serialized)) {
         logger.debug("Ignoring own message");
         return false;

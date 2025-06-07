@@ -21,6 +21,8 @@ export const pkg = packageJson;
 export const LOGFILE = process.env.LOGFILE || "app.log";
 export const LOG_LEVEL = process.env.LOG_LEVEL || "info";
 export const OPENAI_KEY = process.env.OPENAI_KEY;
+export const MAX_PARALLEL_DOWNLOADS =
+    parseInt(process.env.MAX_PARALLEL_DOWNLOADS, 10) || 2;
 
 // to keep track of bot's own messages
 export const BOT_MESSAGES = new Set();

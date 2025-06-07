@@ -1,9 +1,11 @@
 import wa from "whatsapp-web.js";
 import { sendMessage } from "../../utils/sendMessage.mjs";
+import { logger } from "../../utils/log/log.mjs";
 
 const { MessageMedia } = wa;
 
 export async function caption(message) {
+    logger.debug("Executing caption command");
     const { args } = message;
 
     if (args[0]) {

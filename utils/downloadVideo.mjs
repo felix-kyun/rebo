@@ -7,8 +7,14 @@ import { downloadCache } from "./cache.mjs";
 import wa from "whatsapp-web.js";
 import { logger } from "./log/log.mjs";
 import { getFileSizeInMb } from "./getFileSizeInMb.mjs";
+import { MAX_PARALLEL_DOWNLOADS } from "./config/config.mjs";
+import { waitFor } from "./waitFor.mjs";
+import { Semaphore } from "./semaphore/Semaphore.mjs";
+import { sendMessage } from "./sendMessage.mjs";
 const { MessageMedia } = wa;
 
+// semaphore to limit concurrent downloads
+const downloadSemaphore = new Semaphore(MAX_PARALLEL_DOWNLOADS);
 const execPromise = promisify(exec);
 
 export const downloadVideo = async (url) => {
@@ -46,6 +52,10 @@ export const downloadVideo = async (url) => {
 };
 
 export async function downloadSingleVideo(message, url) {
+    logger.debug(
+        `Acquired download semaphore for URL: ${url} for message: ${message.id._serialized}`,
+    );
+
     // cache hit
     const cachedFile = await downloadCache.get(url);
     if (cachedFile) {
@@ -69,13 +79,15 @@ export async function downloadSingleVideo(message, url) {
     logger.info(`[cache set]: ${url} -> ${videoPath.split("/").pop()}`);
 
     const media = MessageMedia.fromFilePath(videoPath);
-    await message.reply(media);
+    sendMessage(message.user.id, media, {
+        quotedMessageId: message.id._serialized,
+    });
 }
 
 export async function downloadVideoFromUrls(message, urls) {
     // download all the urls
-    const downloadPromises = urls.map(
-        async (url) => await downloadSingleVideo(message, url),
+    const downloadPromises = urls.map(async (url) =>
+        downloadSemaphore.run(async () => downloadSingleVideo(message, url)),
     );
 
     const downloadStatus = await Promise.allSettled(downloadPromises);
