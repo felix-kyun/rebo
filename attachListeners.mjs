@@ -5,6 +5,7 @@ import { logger } from "./utils/log/log.mjs";
 import { registerCommands } from "./utils/registerCommands.mjs";
 import { registerHandlers } from "./utils/registerHandlers.mjs";
 import { registerMiddlewares } from "./utils/registerMiddlewares.mjs";
+import { EventEmitter } from "events";
 
 // log ready
 client.once("ready", () => logger.info("Client is ready!"));
@@ -25,4 +26,9 @@ client.on("ready", async () => {
     logger.debug("Commands registered");
 
     registerHandlers(client);
+});
+
+process.on("uncaughtException", (error) => {
+    logger.fatal(error, "Uncaught Exception: ");
+    client.destroy();
 });

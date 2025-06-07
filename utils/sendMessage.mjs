@@ -1,13 +1,13 @@
 import { client } from "../client.mjs";
-import { BOT_MESSAGES, BOT_STATE } from "./config/config.mjs";
+import { BOT_MESSAGES, BOT_STATE, replyMutex } from "./config/config.mjs";
 
 export async function sendMessage(id, message, opts) {
-    BOT_STATE.isCurrentReplying = true;
+    await replyMutex.lock();
 
     const sentMessage = await client.sendMessage(id, message, opts);
     BOT_MESSAGES.add(sentMessage.id._serialized);
 
-    BOT_STATE.isCurrentReplying = false;
+    replyMutex.unlock();
 
     return sentMessage;
 }

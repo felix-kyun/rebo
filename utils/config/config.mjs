@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 import packageJson from "../../package.json" with { type: "json" };
 import { dirname, resolve } from "path";
+import { Mutex } from "../mutex/Mutex.mjs";
 export const ENV = process.env.NODE_ENV || "development";
 export const __dirname = resolve(dirname(process.argv[1]));
 
@@ -26,6 +27,7 @@ export const MAX_PARALLEL_DOWNLOADS =
 
 // to keep track of bot's own messages
 export const BOT_MESSAGES = new Set();
+export const replyMutex = new Mutex();
 export const BOT_STATE = {
     isCurrentReplying: false,
 };
